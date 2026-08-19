@@ -1,31 +1,30 @@
 /* ————————————————————————————————————————————————
    MKM Structural Steel — design tokens & base styles
-   Palette: blued steel + logo navy + weld bronze
+   Light theme, MKM brand: navy #27235D / grey #666 / black
    ———————————————————————————————————————————————— */
 
 :root {
   /* brand */
-  --navy: #27235e;          /* sampled from MKM logo */
+  --navy: #27235d;          /* MKM brand navy (rgb 39,35,93 — from the logo) */
   --navy-deep: #1b1844;
-  --bronze: #a4641d;        /* carried over from existing brand */
-  --weld: #d9832b;          /* hot accent — welds, hovers, underlines */
-  --bronze-pale: #c59054;
+  --accent: #27235d;        /* accent = brand navy */
+  --accent-soft: #3d3884;   /* hover state */
 
-  /* surfaces */
-  --steel-950: #0e0f12;
-  --steel-900: #14161b;
-  --steel-850: #191c22;
-  --steel-800: #1f232b;
-  --steel-700: #2a2f3a;
+  /* surfaces — light */
+  --surface-0: #ffffff;     /* page background */
+  --surface-1: #f6f6f4;     /* alternate sections, cards */
+  --surface-2: #efefec;     /* form inputs, chips */
+  --surface-3: #e6e6e2;     /* media placeholders */
+  --surface-4: #d9d9d4;
 
   /* text */
-  --paper: #ece9e2;
-  --paper-dim: #b9b6ae;
-  --paper-faint: #83817b;
+  --ink: #111111;           /* brand black */
+  --ink-dim: #666666;       /* brand grey */
+  --ink-faint: #8f8f8f;
 
   /* hairlines */
-  --line: rgba(236, 233, 226, 0.09);
-  --line-strong: rgba(236, 233, 226, 0.18);
+  --line: rgba(17, 17, 17, 0.1);
+  --line-strong: rgba(17, 17, 17, 0.22);
 
   /* type */
   --font-display: 'Big Shoulders Variable', 'Arial Narrow', sans-serif;
@@ -44,21 +43,21 @@ html {
 }
 
 body {
-  background: var(--steel-950);
-  color: var(--paper);
+  background: var(--surface-0);
+  color: var(--ink);
   font-family: var(--font-body);
   font-size: 1.0625rem;
   line-height: 1.65;
   overflow-x: hidden;
 }
 
-::selection { background: var(--weld); color: var(--steel-950); }
+::selection { background: var(--navy); color: #fff; }
 
 img { max-width: 100%; display: block; }
 
 a { color: inherit; }
 
-/* —— film grain over everything —— */
+/* —— subtle film grain —— */
 .grain {
   position: fixed;
   inset: -50%;
@@ -66,7 +65,7 @@ a { color: inherit; }
   height: 200%;
   pointer-events: none;
   z-index: 2000;
-  opacity: 0.05;
+  opacity: 0.03;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -78,6 +77,7 @@ h1, h2, h3, .display {
   line-height: 0.92;
   letter-spacing: 0.005em;
   text-wrap: balance;
+  color: var(--navy);
 }
 
 .display-xl { font-size: clamp(3.4rem, 11vw, 8.5rem); }
@@ -88,7 +88,7 @@ h1, h2, h3, .display {
 .lede {
   font-size: clamp(1.1rem, 1.8vw, 1.3rem);
   line-height: 1.55;
-  color: var(--paper-dim);
+  color: var(--ink-dim);
   max-width: 38em;
 }
 
@@ -99,7 +99,7 @@ h1, h2, h3, .display {
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--weld);
+  color: var(--navy);
   display: flex;
   align-items: center;
   gap: 0.9rem;
@@ -108,8 +108,8 @@ h1, h2, h3, .display {
   content: '';
   width: 2.2rem;
   height: 1px;
-  background: var(--weld);
-  box-shadow: 0 3px 0 0 color-mix(in srgb, var(--weld) 45%, transparent);
+  background: var(--navy);
+  box-shadow: 0 3px 0 0 color-mix(in srgb, var(--navy) 35%, transparent);
 }
 .spec--plain::before { display: none; }
 
@@ -123,15 +123,15 @@ h1, h2, h3, .display {
 .section { padding-block: clamp(4.5rem, 9vw, 8rem); }
 .section--tight { padding-block: clamp(3rem, 6vw, 5rem); }
 
-/* hazard stripe strip — use sparingly */
+/* navy stripe strip — use sparingly */
 .hazard {
   height: 8px;
   background: repeating-linear-gradient(
     -45deg,
-    var(--bronze) 0 14px,
-    var(--steel-950) 14px 28px
+    var(--navy) 0 14px,
+    var(--surface-0) 14px 28px
   );
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 /* hairline rules */
@@ -150,11 +150,11 @@ h1, h2, h3, .display {
   text-decoration: none;
   padding: 0.95rem 1.6rem;
   border: 1px solid var(--line-strong);
-  color: var(--paper);
+  color: var(--ink);
   background: transparent;
   cursor: pointer;
   position: relative;
-  transition: color 0.25s ease, border-color 0.25s ease;
+  transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease;
 }
 .btn::after {
   content: '→';
@@ -162,13 +162,13 @@ h1, h2, h3, .display {
 }
 .btn:hover::after { transform: translateX(4px); }
 .btn--solid {
-  background: var(--weld);
-  border-color: var(--weld);
-  color: var(--steel-950);
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
   font-weight: 600;
 }
-.btn--solid:hover { background: var(--bronze-pale); border-color: var(--bronze-pale); }
-.btn--ghost:hover { border-color: var(--weld); color: var(--weld); }
+.btn--solid:hover { background: var(--accent-soft); border-color: var(--accent-soft); }
+.btn--ghost:hover { border-color: var(--navy); color: var(--navy); }
 
 /* —— reveal on scroll —— */
 .reveal {
@@ -186,16 +186,36 @@ h1, h2, h3, .display {
   *, *::before, *::after { animation-duration: 0.001s !important; }
 }
 
-/* —— blueprint surface (map + drafting sections) —— */
+/* —— blueprint surface: navy drafting sections (map, process) ——
+   these sections stay dark navy with light text on the light site */
 .blueprint {
   background-color: var(--navy-deep);
   background-image:
-    linear-gradient(rgba(236, 233, 226, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(236, 233, 226, 0.045) 1px, transparent 1px),
-    linear-gradient(rgba(236, 233, 226, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(236, 233, 226, 0.025) 1px, transparent 1px);
+    linear-gradient(rgba(236, 233, 226, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(236, 233, 226, 0.05) 1px, transparent 1px),
+    linear-gradient(rgba(236, 233, 226, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(236, 233, 226, 0.028) 1px, transparent 1px);
   background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  color: #eceae4;
 }
+.blueprint h1,
+.blueprint h2,
+.blueprint h3,
+.blueprint .display { color: #f4f2ec; }
+.blueprint .lede { color: rgba(236, 234, 228, 0.78); }
+.blueprint .spec { color: rgba(236, 234, 228, 0.85); }
+.blueprint .spec::before {
+  background: rgba(236, 234, 228, 0.85);
+  box-shadow: 0 3px 0 0 rgba(236, 234, 228, 0.3);
+}
+.blueprint .btn--solid {
+  background: #fff;
+  border-color: #fff;
+  color: var(--navy);
+}
+.blueprint .btn--solid:hover { background: var(--surface-2); border-color: var(--surface-2); }
+.blueprint .btn--ghost { color: #eceae4; border-color: rgba(236, 234, 228, 0.4); }
+.blueprint .btn--ghost:hover { border-color: #fff; color: #fff; }
 
 /* —— skip link —— */
 .skip-link {
@@ -203,8 +223,8 @@ h1, h2, h3, .display {
   left: -999px;
   top: 0;
   z-index: 3000;
-  background: var(--weld);
-  color: var(--steel-950);
+  background: var(--navy);
+  color: #fff;
   padding: 0.6rem 1rem;
   font-family: var(--font-mono);
 }
@@ -217,15 +237,15 @@ h1, h2, h3, .display {
   font-size: 0.75rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--paper-dim);
+  color: var(--ink-dim);
 }
 .field input,
 .field textarea {
   font-family: var(--font-body);
   font-size: 1rem;
-  color: var(--paper);
-  background: var(--steel-850);
-  border: 1px solid var(--line);
+  color: var(--ink);
+  background: var(--surface-1);
+  border: 1px solid var(--line-strong);
   padding: 0.85rem 1rem;
   border-radius: 0;
   width: 100%;
@@ -233,8 +253,8 @@ h1, h2, h3, .display {
 .field input:focus,
 .field textarea:focus {
   outline: none;
-  border-color: var(--weld);
-  box-shadow: 0 0 0 1px var(--weld);
+  border-color: var(--navy);
+  box-shadow: 0 0 0 1px var(--navy);
 }
 
 /* —— cards & tables —— */
@@ -256,7 +276,7 @@ h1, h2, h3, .display {
   font-size: 0.72rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--paper-faint);
+  color: var(--ink-dim);
   width: 38%;
   padding-right: 1rem;
 }

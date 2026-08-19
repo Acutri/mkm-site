@@ -38,16 +38,16 @@ const { slug, title, location, year, category, cover, summary, delay = 0 } = Ast
     display: flex;
     flex-direction: column;
     text-decoration: none;
-    background: var(--steel-900);
+    background: var(--surface-1);
     border: 1px solid var(--line);
     transition: border-color 0.25s ease, transform 0.25s ease;
   }
-  .card:hover { border-color: var(--weld); transform: translateY(-4px); }
+  .card:hover { border-color: var(--accent); transform: translateY(-4px); }
   .card__media {
     position: relative;
     aspect-ratio: 16 / 10;
     overflow: hidden;
-    background: var(--steel-800);
+    background: var(--surface-3);
   }
   .card__media img {
     width: 100%;
@@ -61,8 +61,8 @@ const { slug, title, location, year, category, cover, summary, delay = 0 } = Ast
     position: absolute;
     left: 0;
     bottom: 0;
-    background: var(--steel-950);
-    color: var(--weld);
+    background: var(--surface-0);
+    color: var(--accent);
     font-family: var(--font-mono);
     font-size: 0.68rem;
     font-weight: 500;
@@ -80,14 +80,14 @@ const { slug, title, location, year, category, cover, summary, delay = 0 } = Ast
     font-size: 0.72rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--paper-faint);
+    color: var(--ink-faint);
   }
   .card__title {
     font-size: clamp(1.35rem, 2vw, 1.7rem);
-    color: var(--paper);
+    color: var(--navy);
   }
   .card__summary {
-    color: var(--paper-dim);
+    color: var(--ink-dim);
     font-size: 0.92rem;
     line-height: 1.55;
     display: -webkit-box;
@@ -101,7 +101,7 @@ const { slug, title, location, year, category, cover, summary, delay = 0 } = Ast
     font-size: 0.74rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--weld);
+    color: var(--accent);
     opacity: 0;
     transform: translateX(-6px);
     transition: opacity 0.25s ease, transform 0.25s ease;
