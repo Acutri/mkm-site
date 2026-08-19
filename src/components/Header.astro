@@ -1,0 +1,183 @@
+---
+const links = [
+  { href: '/projects', label: 'Projects' },
+  { href: '/about', label: 'About Us' },
+  { href: '/contact', label: 'Contact Us' },
+];
+const path = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="site-header__inner container">
+    <a href="/" class="brand" aria-label="MKM Structural Steel — home">
+      <span class="brand__plate">
+        <img src="/logo.png" alt="MKM" width="120" height="33" />
+      </span>
+      <span class="brand__text">Structural<br />Steel</span>
+    </a>
+
+    <nav class="nav" aria-label="Main">
+      <button class="nav__toggle" aria-expanded="false" aria-controls="nav-list">
+        <span class="nav__toggle-box" aria-hidden="true"><i></i><i></i><i></i></span>
+        Menu
+      </button>
+      <ul class="nav__list" id="nav-list">
+        {
+          links.map((l) => (
+            <li>
+              <a
+                href={l.href}
+                class="nav__link"
+                aria-current={path.startsWith(l.href) ? 'page' : undefined}
+              >
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+        <li><a href="/contact" class="nav__cta">Get a quote</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: color-mix(in srgb, var(--steel-950) 88%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    height: 4.5rem;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    text-decoration: none;
+  }
+  .brand__plate {
+    background: var(--paper);
+    padding: 0.35rem 0.55rem;
+    display: grid;
+    place-items: center;
+  }
+  .brand__plate img { width: 108px; height: auto; }
+  .brand__text {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    line-height: 1.5;
+    color: var(--paper-dim);
+  }
+  .nav__list {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2.5vw, 2.2rem);
+    list-style: none;
+  }
+  .nav__link {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--paper-dim);
+    padding-block: 0.4rem;
+    position: relative;
+    transition: color 0.2s ease;
+  }
+  .nav__link:hover { color: var(--paper); }
+  .nav__link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 0;
+    background: var(--weld);
+    transition: width 0.25s ease;
+  }
+  .nav__link:hover::after,
+  .nav__link[aria-current='page']::after { width: 100%; }
+  .nav__link[aria-current='page'] { color: var(--paper); }
+  .nav__cta {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--steel-950);
+    background: var(--weld);
+    padding: 0.6rem 1.1rem;
+    transition: background 0.2s ease;
+  }
+  .nav__cta:hover { background: var(--bronze-pale); }
+
+  .nav__toggle {
+    display: none;
+    align-items: center;
+    gap: 0.6rem;
+    background: none;
+    border: 1px solid var(--line-strong);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.55rem 0.9rem;
+    cursor: pointer;
+  }
+  .nav__toggle-box { display: grid; gap: 4px; }
+  .nav__toggle-box i {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: var(--weld);
+  }
+
+  @media (max-width: 760px) {
+    .nav__toggle { display: inline-flex; }
+    .nav__list {
+      display: none;
+      position: absolute;
+      top: 4.5rem;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      background: var(--steel-900);
+      border-bottom: 2px solid var(--weld);
+      padding: 0.5rem 0 1rem;
+    }
+    .nav__list.is-open { display: flex; }
+    .nav__list li { padding-inline: var(--gutter); }
+    .nav__link { display: block; padding: 0.85rem 0; }
+    .nav__cta {
+      display: inline-block;
+      margin-top: 0.75rem;
+      text-align: center;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector('.nav__toggle');
+  const list = document.getElementById('nav-list');
+  toggle?.addEventListener('click', () => {
+    const open = list?.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', String(!!open));
+  });
+</script>

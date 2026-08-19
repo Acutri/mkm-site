@@ -1,0 +1,94 @@
+---
+import site from '../data/site.json';
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="hazard" aria-hidden="true"></div>
+  <div class="container footer__grid section--tight">
+    <div class="footer__brand">
+      <span class="footer__plate"><img src="/logo.png" alt="MKM" width="140" height="39" /></span>
+      <p class="footer__tag">{site.tagline}</p>
+    </div>
+
+    <nav class="footer__nav" aria-label="Footer">
+      <p class="footer__heading">Site</p>
+      <ul>
+        <li><a href="/projects">Projects</a></li>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <p class="footer__heading">Contact</p>
+      <ul class="footer__contact">
+        {site.phone && <li><a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a></li>}
+        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        <li>{site.address}</li>
+        {site.abn && <li class="footer__abn">ABN {site.abn}</li>}
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer__legal">
+    <div class="container">
+      <span>© {year} {site.company}</span>
+      <span class="footer__coords">-37.81 / 144.96 — VIC, AUS</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer { background: var(--steel-900); border-top: 1px solid var(--line); }
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.4fr;
+    gap: 2.5rem;
+  }
+  .footer__plate {
+    display: inline-block;
+    background: var(--paper);
+    padding: 0.5rem 0.7rem;
+  }
+  .footer__tag {
+    margin-top: 1rem;
+    color: var(--paper-dim);
+    max-width: 26em;
+    font-size: 0.95rem;
+  }
+  .footer__heading {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--weld);
+    margin-bottom: 0.9rem;
+  }
+  .footer ul { list-style: none; display: grid; gap: 0.45rem; }
+  .footer a {
+    color: var(--paper-dim);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .footer a:hover { color: var(--weld); }
+  .footer__contact { color: var(--paper-dim); font-size: 0.95rem; }
+  .footer__abn { font-family: var(--font-mono); font-size: 0.8rem; }
+  .footer__legal {
+    border-top: 1px solid var(--line);
+    padding-block: 1.1rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--paper-faint);
+  }
+  .footer__legal .container {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  @media (max-width: 760px) {
+    .footer__grid { grid-template-columns: 1fr; gap: 2rem; }
+  }
+</style>

@@ -1,0 +1,134 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', ({ data }) => !data.draft);
+  return projects.map((p) => ({ params: { slug: p.id }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const d = project.data;
+const gallery = d.images.filter((img) => img !== d.cover);
+---
+
+<Base title={d.title} description={d.summary ?? `${d.title} — ${d.location}`} ogImage={d.cover}>
+  <article>
+    <section class="p-hero" style={d.cover ? `--cover:url('${d.cover}')` : undefined}>
+      <div class="container p-hero__inner">
+        <p class="spec reveal">
+          <a href="/projects" class="p-hero__back">← Projects</a>
+        </p>
+        <h1 class="display-xl reveal" style="--reveal-delay:.08s">{d.title}</h1>
+      </div>
+    </section>
+
+    <section class="section--tight">
+      <div class="container p-layout">
+        <aside class="p-specs reveal">
+          <table class="spec-table">
+            <tbody>
+              <tr><th>Location</th><td>{d.location}</td></tr>
+              {d.year && <tr><th>Year</th><td>{d.year}</td></tr>}
+              <tr><th>Category</th><td>{d.category}</td></tr>
+              {d.client && <tr><th>Client</th><td>{d.client}</td></tr>}
+            </tbody>
+          </table>
+          <a class="btn btn--ghost" href="/contact" style="margin-top:2rem">
+            Discuss a similar project
+          </a>
+        </aside>
+
+        <div class="p-body reveal" style="--reveal-delay:.1s">
+          {d.summary && <p class="lede" style="margin-bottom:1.5rem">{d.summary}</p>}
+          <div class="prose">
+            <Content />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {
+      (d.cover || gallery.length > 0) && (
+        <section class="section--tight">
+          <div class="container">
+            <p class="spec reveal" style="margin-bottom:2rem">Site photos</p>
+            <div class="gallery">
+              {d.cover && (
+                <figure class="gallery__item gallery__item--wide reveal">
+                  <img src={d.cover} alt={`${d.title} — site photo`} loading="lazy" />
+                </figure>
+              )}
+              {gallery.map((img, i) => (
+                <figure class="gallery__item reveal" style={`--reveal-delay:${(i % 3) * 0.07}s`}>
+                  <img src={img} alt={`${d.title} — site photo ${i + 2}`} loading="lazy" />
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+  </article>
+</Base>
+
+<style>
+  .p-hero {
+    position: relative;
+    padding-top: clamp(4rem, 9vw, 7rem);
+    background:
+      linear-gradient(180deg, rgba(14, 15, 18, 0.75), var(--steel-950) 92%),
+      var(--cover, linear-gradient(135deg, var(--steel-800), var(--steel-900)));
+    background-size: cover;
+    background-position: center;
+  }
+  .p-hero__inner { padding-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .p-hero__back { color: var(--weld); text-decoration: none; }
+  .p-hero__back:hover { text-decoration: underline; }
+  .p-hero h1 { margin-top: 1.2rem; max-width: 12em; }
+
+  .p-layout {
+    display: grid;
+    grid-template-columns: minmax(240px, 1fr) 2.2fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: start;
+  }
+  .p-specs { position: sticky; top: 6rem; }
+  @media (max-width: 820px) {
+    .p-layout { grid-template-columns: 1fr; }
+    .p-specs { position: static; }
+  }
+
+  .prose :global(p) { margin-bottom: 1.1rem; color: var(--paper-dim); }
+  .prose :global(strong) { color: var(--paper); }
+  .prose :global(ul),
+  .prose :global(ol) { margin: 0 0 1.1rem 1.3rem; color: var(--paper-dim); }
+  .prose :global(h2),
+  .prose :global(h3) { margin: 1.8rem 0 0.8rem; }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .gallery__item {
+    margin: 0;
+    border: 1px solid var(--line);
+    background: var(--steel-900);
+    overflow: hidden;
+  }
+  .gallery__item--wide { grid-column: span 2; }
+  .gallery__item img {
+    width: 100%;
+    height: 100%;
+    min-height: 240px;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .gallery__item:hover img { transform: scale(1.03); }
+  @media (max-width: 760px) {
+    .gallery { grid-template-columns: 1fr; }
+    .gallery__item--wide { grid-column: auto; }
+  }
+</style>

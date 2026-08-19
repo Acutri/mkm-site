@@ -1,0 +1,32 @@
+{
+  "company": "MKM Structural Steel",
+  "tagline": "Structural steel — detailed, fabricated and erected across Victoria.",
+  "phone": "",
+  "email": "mkm@mkm.au",
+  "address": "Victoria, Australia",
+  "abn": "",
+  "stats": [
+    { "value": "20+", "label": "Years in steel" },
+    { "value": "100+", "label": "Projects delivered" },
+    { "value": "4", "label": "Services under one roof" },
+    { "value": "VIC", "label": "Wide coverage" }
+  ],
+  "services": [
+    {
+      "title": "Detailing",
+      "description": "Shop drawings and 3D modelling that catch problems on screen, not on site. Every connection resolved before a single length of steel is cut."
+    },
+    {
+      "title": "Steelwork",
+      "description": "Structural members, connections and general steelwork for commercial, industrial and residential builds — supplied to spec and on programme."
+    },
+    {
+      "title": "Fabrication",
+      "description": "In-house fabrication with certified welders. Beams, columns, trusses, stairs and balustrades cut, drilled and welded to AS/NZS standards."
+    },
+    {
+      "title": "Erection",
+      "description": "Our own crews stand the steel we make. Craneage, rigging and bolting handled end-to-end, with the site left ready for the next trade."
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+# Pages CMS configuration — https://pagescms.org/docs/
+# Log in at https://app.pagescms.org with GitHub, open this repo, and this
+# file defines the admin UI.
+
+media:
+  input: public/uploads
+  output: /uploads
+  extensions: [jpg, jpeg, png, webp, avif, svg]
+
+content:
+  - name: projects
+    label: Projects
+    icon: building-2
+    type: collection
+    path: src/content/projects
+    format: yaml-frontmatter
+    view:
+      fields: [title, location, year, category, showOnMap, featured]
+      primary: title
+      sort: [year, title]
+      default:
+        sort: year
+        order: desc
+    fields:
+      - name: title
+        label: Project name
+        type: string
+        required: true
+      - name: client
+        label: Client / builder
+        type: string
+      - name: location
+        label: Location (town or suburb)
+        type: string
+        required: true
+      - name: year
+        label: Year completed
+        type: number
+      - name: category
+        label: Category
+        type: select
+        default: Commercial
+        options:
+          values: [Commercial, Industrial, Residential, Education, Agricultural, Community, Infrastructure]
+      - name: summary
+        label: One-line summary (shown on cards)
+        type: string
+      - name: cover
+        label: Cover photo
+        type: image
+      - name: images
+        label: Photo gallery
+        type: image
+        list: true
+      - name: lat
+        label: Latitude (right-click the spot in Google Maps → copy coordinates)
+        type: number
+      - name: lng
+        label: Longitude
+        type: number
+      - name: showOnMap
+        label: Show on the project map
+        type: boolean
+        default: true
+      - name: featured
+        label: Feature on the homepage
+        type: boolean
+        default: false
+      - name: draft
+        label: Hide from the website entirely
+        type: boolean
+        default: false
+      - name: body
+        label: Project description
+        type: rich-text
+
+  - name: staff
+    label: Staff profiles
+    icon: users
+    type: collection
+    path: src/content/staff
+    format: yaml-frontmatter
+    view:
+      fields: [name, role, order]
+      primary: name
+      sort: [order, name]
+    fields:
+      - name: name
+        label: Name
+        type: string
+        required: true
+      - name: role
+        label: Role / title
+        type: string
+        required: true
+      - name: photo
+        label: Photo
+        type: image
+      - name: order
+        label: Display order (lower = first)
+        type: number
+        default: 99
+      - name: body
+        label: Short bio
+        type: rich-text
+
+  - name: about
+    label: About page
+    icon: file-text
+    type: file
+    path: src/content/pages/about.md
+    format: yaml-frontmatter
+    fields:
+      - name: title
+        label: Page title
+        type: string
+      - name: body
+        label: About text
+        type: rich-text
+
+  - name: settings
+    label: Site settings
+    icon: settings
+    type: file
+    path: src/data/site.json
+    format: json
+    fields:
+      - name: company
+        label: Company name
+        type: string
+      - name: tagline
+        label: Tagline
+        type: string
+      - name: phone
+        label: Phone
+        type: string
+      - name: email
+        label: Email
+        type: string
+      - name: address
+        label: Workshop address
+        type: string
+      - name: abn
+        label: ABN
+        type: string
+      - name: stats
+        label: Homepage stats
+        type: object
+        list: true
+        fields:
+          - { name: value, label: Value (e.g. "100+"), type: string }
+          - { name: label, label: Label, type: string }
+      - name: services
+        label: Services
+        type: object
+        list: true
+        fields:
+          - { name: title, label: Service name, type: string }
+          - { name: description, label: Description, type: text }

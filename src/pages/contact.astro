@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro';
+import ContactForm from '../components/ContactForm.astro';
+import site from '../data/site.json';
+---
+
+<Base
+  title="Contact Us"
+  description="Get in touch with MKM Structural Steel for structural steel detailing, fabrication and erection across Victoria."
+>
+  <section class="section--tight" style="padding-top: clamp(3rem, 6vw, 5rem)">
+    <div class="container">
+      <p class="spec reveal">Get in touch</p>
+      <h1 class="display-xl reveal" style="margin:1rem 0 1.5rem">Contact Us</h1>
+      <p class="lede reveal">
+        Send through your drawings, your dates and your site — we'll come back
+        with a price and a programme.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="container contact-grid">
+      <div class="reveal">
+        <ContactForm />
+      </div>
+      <aside class="contact-side reveal" style="--reveal-delay:.1s">
+        <div class="contact-block">
+          <p class="spec spec--plain">Email</p>
+          <a class="contact-big" href={`mailto:${site.email}`}>{site.email}</a>
+        </div>
+        {
+          site.phone && (
+            <div class="contact-block">
+              <p class="spec spec--plain">Phone</p>
+              <a class="contact-big" href={`tel:${site.phone.replace(/\s/g, '')}`}>
+                {site.phone}
+              </a>
+            </div>
+          )
+        }
+        <div class="contact-block">
+          <p class="spec spec--plain">Workshop</p>
+          <p class="contact-big contact-big--plain">{site.address}</p>
+        </div>
+        <div class="contact-block">
+          <p class="spec spec--plain">Coverage</p>
+          <p class="contact-big contact-big--plain">All of Victoria</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: start;
+  }
+  @media (max-width: 820px) { .contact-grid { grid-template-columns: 1fr; } }
+  .contact-side { display: grid; gap: 2.2rem; }
+  .contact-block { display: grid; gap: 0.6rem; }
+  .contact-big {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+    font-weight: 720;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--paper);
+    text-decoration: none;
+    line-height: 1.1;
+  }
+  a.contact-big:hover { color: var(--weld); }
+</style>

@@ -1,0 +1,262 @@
+/* ————————————————————————————————————————————————
+   MKM Structural Steel — design tokens & base styles
+   Palette: blued steel + logo navy + weld bronze
+   ———————————————————————————————————————————————— */
+
+:root {
+  /* brand */
+  --navy: #27235e;          /* sampled from MKM logo */
+  --navy-deep: #1b1844;
+  --bronze: #a4641d;        /* carried over from existing brand */
+  --weld: #d9832b;          /* hot accent — welds, hovers, underlines */
+  --bronze-pale: #c59054;
+
+  /* surfaces */
+  --steel-950: #0e0f12;
+  --steel-900: #14161b;
+  --steel-850: #191c22;
+  --steel-800: #1f232b;
+  --steel-700: #2a2f3a;
+
+  /* text */
+  --paper: #ece9e2;
+  --paper-dim: #b9b6ae;
+  --paper-faint: #83817b;
+
+  /* hairlines */
+  --line: rgba(236, 233, 226, 0.09);
+  --line-strong: rgba(236, 233, 226, 0.18);
+
+  /* type */
+  --font-display: 'Big Shoulders Variable', 'Arial Narrow', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  --container: 76rem;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--steel-950);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--weld); color: var(--steel-950); }
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; }
+
+/* —— film grain over everything —— */
+.grain {
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  z-index: 2000;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* —— typography —— */
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-weight: 780;
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: 0.005em;
+  text-wrap: balance;
+}
+
+.display-xl { font-size: clamp(3.4rem, 11vw, 8.5rem); }
+.display-lg { font-size: clamp(2.6rem, 6.5vw, 5rem); }
+.display-md { font-size: clamp(1.9rem, 4vw, 3rem); }
+.display-sm { font-size: clamp(1.4rem, 2.6vw, 1.9rem); letter-spacing: 0.02em; }
+
+.lede {
+  font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+  line-height: 1.55;
+  color: var(--paper-dim);
+  max-width: 38em;
+}
+
+/* mono drafting labels — "01 / CAPABILITIES" */
+.spec {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--weld);
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+.spec::before {
+  content: '';
+  width: 2.2rem;
+  height: 1px;
+  background: var(--weld);
+  box-shadow: 0 3px 0 0 color-mix(in srgb, var(--weld) 45%, transparent);
+}
+.spec--plain::before { display: none; }
+
+/* —— layout —— */
+.container {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section { padding-block: clamp(4.5rem, 9vw, 8rem); }
+.section--tight { padding-block: clamp(3rem, 6vw, 5rem); }
+
+/* hazard stripe strip — use sparingly */
+.hazard {
+  height: 8px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--bronze) 0 14px,
+    var(--steel-950) 14px 28px
+  );
+  opacity: 0.85;
+}
+
+/* hairline rules */
+.rule { border: 0; border-top: 1px solid var(--line); }
+
+/* —— buttons —— */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.95rem 1.6rem;
+  border: 1px solid var(--line-strong);
+  color: var(--paper);
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+.btn::after {
+  content: '→';
+  transition: transform 0.25s ease;
+}
+.btn:hover::after { transform: translateX(4px); }
+.btn--solid {
+  background: var(--weld);
+  border-color: var(--weld);
+  color: var(--steel-950);
+  font-weight: 600;
+}
+.btn--solid:hover { background: var(--bronze-pale); border-color: var(--bronze-pale); }
+.btn--ghost:hover { border-color: var(--weld); color: var(--weld); }
+
+/* —— reveal on scroll —— */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after { animation-duration: 0.001s !important; }
+}
+
+/* —— blueprint surface (map + drafting sections) —— */
+.blueprint {
+  background-color: var(--navy-deep);
+  background-image:
+    linear-gradient(rgba(236, 233, 226, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(236, 233, 226, 0.045) 1px, transparent 1px),
+    linear-gradient(rgba(236, 233, 226, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(236, 233, 226, 0.025) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+}
+
+/* —— skip link —— */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  z-index: 3000;
+  background: var(--weld);
+  color: var(--steel-950);
+  padding: 0.6rem 1rem;
+  font-family: var(--font-mono);
+}
+.skip-link:focus { left: 0; }
+
+/* —— forms —— */
+.field { display: grid; gap: 0.45rem; }
+.field label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+.field input,
+.field textarea {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--paper);
+  background: var(--steel-850);
+  border: 1px solid var(--line);
+  padding: 0.85rem 1rem;
+  border-radius: 0;
+  width: 100%;
+}
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--weld);
+  box-shadow: 0 0 0 1px var(--weld);
+}
+
+/* —— cards & tables —— */
+.spec-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.spec-table th,
+.spec-table td {
+  text-align: left;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.spec-table th {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--paper-faint);
+  width: 38%;
+  padding-right: 1rem;
+}

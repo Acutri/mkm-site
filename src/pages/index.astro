@@ -1,0 +1,312 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import site from '../data/site.json';
+
+const projects = (await getCollection('projects', ({ data }) => !data.draft))
+  .sort((a, b) => (b.data.year ?? 0) - (a.data.year ?? 0));
+const featured = projects.filter((p) => p.data.featured).slice(0, 3);
+const featuredOrLatest = featured.length ? featured : projects.slice(0, 3);
+---
+
+<Base title="Structural Steel Fabrication, Victoria">
+  <!-- ———— HERO ———— -->
+  <section class="hero">
+    <div class="hero__beam" aria-hidden="true">⌶</div>
+    <div class="container hero__inner">
+      <p class="spec reveal">MKM Structural Steel — Victoria</p>
+      <h1 class="hero__title">
+        <span class="reveal" style="--reveal-delay:.05s">Detailed.</span>
+        <span class="reveal hero__title-outline" style="--reveal-delay:.15s">Fabricated.</span>
+        <span class="reveal" style="--reveal-delay:.25s">Erected<i class="hero__dot">.</i></span>
+      </h1>
+      <div class="hero__foot reveal" style="--reveal-delay:.4s">
+        <p class="lede">
+          One team from shop drawings to standing steel. Structural steel
+          packages for commercial, industrial and residential projects across
+          Victoria.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--solid" href="/projects">View our projects</a>
+          <a class="btn btn--ghost" href="/contact">Get a quote</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero__strip" aria-hidden="true">
+      <div class="hero__marquee">
+        {Array.from({ length: 2 }).map(() => (
+          <span>
+            Detailing · Steelwork · Fabrication · Erection · Detailing ·
+            Steelwork · Fabrication · Erection ·&nbsp;
+          </span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ———— SERVICES ———— -->
+  <section class="section">
+    <div class="container">
+      <p class="spec reveal">01 / What we do</p>
+      <h2 class="display-lg reveal" style="margin:1rem 0 3rem">
+        Four trades.<br />One accountable team.
+      </h2>
+      <div class="services">
+        {
+          site.services.map((s, i) => (
+            <article class="service reveal" style={`--reveal-delay:${i * 0.08}s`}>
+              <span class="service__num">0{i + 1}</span>
+              <h3 class="display-sm">{s.title}</h3>
+              <p>{s.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ———— STATS ———— -->
+  <section class="stats" aria-label="Company statistics">
+    <div class="hazard" aria-hidden="true"></div>
+    <div class="container stats__grid">
+      {
+        site.stats.map((s, i) => (
+          <div class="stat reveal" style={`--reveal-delay:${i * 0.07}s`}>
+            <span class="stat__value display">{s.value}</span>
+            <span class="stat__label">{s.label}</span>
+          </div>
+        ))
+      }
+    </div>
+    <div class="hazard" aria-hidden="true"></div>
+  </section>
+
+  <!-- ———— FEATURED PROJECTS ———— -->
+  <section class="section">
+    <div class="container">
+      <div class="split-head">
+        <div>
+          <p class="spec reveal">02 / Recent work</p>
+          <h2 class="display-lg reveal" style="margin-top:1rem">Built by MKM</h2>
+        </div>
+        <a class="btn btn--ghost reveal" href="/projects">All projects</a>
+      </div>
+      <div class="card-grid" style="margin-top:3rem">
+        {
+          featuredOrLatest.map((p, i) => (
+            <ProjectCard
+              slug={p.id}
+              title={p.data.title}
+              location={p.data.location}
+              year={p.data.year}
+              category={p.data.category}
+              cover={p.data.cover}
+              summary={p.data.summary}
+              delay={i * 0.08}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ———— MAP TEASER ———— -->
+  <section class="blueprint section">
+    <div class="container map-teaser">
+      <div>
+        <p class="spec reveal">03 / Where we've built</p>
+        <h2 class="display-lg reveal" style="margin:1rem 0 1.2rem">
+          {projects.length}+ projects<br />across Victoria
+        </h2>
+        <p class="lede reveal">
+          From the CBD to the border — every pin on our project map is standing
+          steel we detailed, fabricated and erected.
+        </p>
+        <a class="btn btn--solid reveal" style="margin-top:2rem" href="/projects#map">
+          Open the project map
+        </a>
+      </div>
+      <div class="map-teaser__mark reveal" aria-hidden="true">
+        <svg viewBox="0 0 200 200" width="260" height="260">
+          <path
+            d="M40 30 H160 M40 40 H160 M60 40 V160 M140 40 V160 M40 160 H160 M40 170 H160"
+            fill="none"
+            stroke="var(--weld)"
+            stroke-width="7"
+            stroke-linecap="square"
+            opacity="0.9"
+          />
+          <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(236,233,226,.25)" stroke-dasharray="4 7" />
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ———— CTA ———— -->
+  <section class="section cta">
+    <div class="container">
+      <p class="spec reveal">04 / Next project</p>
+      <h2 class="display-lg reveal" style="margin:1rem 0 2rem">
+        Got drawings?<br />Let's price the steel.
+      </h2>
+      <a class="btn btn--solid reveal" href="/contact">Contact us</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* hero */
+  .hero {
+    position: relative;
+    padding-top: clamp(4rem, 10vh, 7.5rem);
+    overflow: hidden;
+    background:
+      radial-gradient(120% 90% at 85% -10%, color-mix(in srgb, var(--navy) 55%, transparent) 0%, transparent 55%),
+      linear-gradient(180deg, var(--steel-900), var(--steel-950) 70%);
+  }
+  .hero__beam {
+    position: absolute;
+    right: -4rem;
+    top: 45%;
+    transform: translateY(-50%);
+    font-size: clamp(20rem, 42vw, 38rem);
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(236, 233, 226, 0.07);
+    user-select: none;
+    pointer-events: none;
+  }
+  .hero__title {
+    display: grid;
+    font-size: clamp(3.6rem, 12.5vw, 9.5rem);
+    margin: 1.6rem 0 2.4rem;
+  }
+  .hero__title-outline {
+    color: transparent;
+    -webkit-text-stroke: 2px var(--paper);
+  }
+  .hero__dot { color: var(--weld); font-style: normal; }
+  .hero__foot {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    padding-bottom: clamp(3rem, 7vh, 5.5rem);
+  }
+  .hero__cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .hero__strip {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--steel-900);
+    overflow: hidden;
+    padding-block: 0.7rem;
+  }
+  .hero__marquee {
+    display: flex;
+    white-space: nowrap;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--paper-faint);
+    animation: marquee 30s linear infinite;
+  }
+  @keyframes marquee {
+    to { transform: translateX(-50%); }
+  }
+
+  /* services */
+  .services {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-left: 1px solid var(--line);
+  }
+  .service {
+    border-right: 1px solid var(--line);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 1.8rem 1.5rem 2.2rem;
+    display: grid;
+    gap: 0.9rem;
+    align-content: start;
+    position: relative;
+    transition: background 0.3s ease;
+  }
+  .service:hover { background: var(--steel-900); }
+  .service::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -1px;
+    height: 3px;
+    background: var(--weld);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .service:hover::after { transform: scaleX(1); }
+  .service__num {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--weld);
+    letter-spacing: 0.2em;
+  }
+  .service p { color: var(--paper-dim); font-size: 0.93rem; line-height: 1.6; }
+  @media (max-width: 980px) { .services { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .services { grid-template-columns: 1fr; } }
+
+  /* stats */
+  .stats { background: var(--steel-900); }
+  .stats__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    padding-block: clamp(2.5rem, 5vw, 4rem);
+  }
+  .stat { display: grid; gap: 0.4rem; justify-items: start; }
+  .stat__value {
+    font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+    color: var(--weld);
+  }
+  .stat__label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+  }
+  @media (max-width: 760px) { .stats__grid { grid-template-columns: 1fr 1fr; } }
+
+  /* featured */
+  .split-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  @media (max-width: 980px) { .card-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 640px) { .card-grid { grid-template-columns: 1fr; } }
+
+  /* map teaser */
+  .map-teaser {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+  .map-teaser__mark { flex-shrink: 0; }
+  @media (max-width: 760px) { .map-teaser__mark { display: none; } }
+
+  .cta { border-top: 1px solid var(--line); }
+</style>
