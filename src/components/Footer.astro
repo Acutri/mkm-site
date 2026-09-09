@@ -7,7 +7,10 @@ const year = new Date().getFullYear();
   <div class="hazard" aria-hidden="true"></div>
   <div class="container footer__grid section--tight">
     <div class="footer__brand">
-      <span class="footer__plate"><img src="/logo.png" alt="MKM" width="140" height="39" /></span>
+      <span class="footer__plate">
+        <img src="/logo.png" alt="" width="140" height="39" />
+        <span class="footer__wordmark">MKM Structural Steel</span>
+      </span>
       <p class="footer__tag">{site.tagline}</p>
     </div>
 
@@ -46,7 +49,15 @@ const year = new Date().getFullYear();
     grid-template-columns: 2fr 1fr 1.4fr;
     gap: 2.5rem;
   }
-  .footer__plate { display: inline-block; }
+  .footer__plate { display: inline-grid; justify-items: start; gap: 0.5rem; }
+  .footer__plate img { display: block; }
+  .footer__wordmark {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
   .footer__tag {
     margin-top: 1rem;
     color: var(--ink-dim);

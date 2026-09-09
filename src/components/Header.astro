@@ -11,9 +11,9 @@ const path = Astro.url.pathname;
   <div class="site-header__inner container">
     <a href="/" class="brand" aria-label="MKM Structural Steel — home">
       <span class="brand__plate">
-        <img src="/logo.png" alt="MKM" width="120" height="33" />
+        <img src="/logo.png" alt="" width="120" height="33" />
       </span>
-      <span class="brand__text">Structural<br />Steel</span>
+      <span class="brand__text">MKM Structural Steel</span>
     </a>
 
     <nav class="nav" aria-label="Main">
@@ -72,10 +72,22 @@ const path = Astro.url.pathname;
   .brand__text {
     font-family: var(--font-mono);
     font-size: 0.62rem;
-    letter-spacing: 0.26em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    line-height: 1.5;
+    line-height: 1;
+    white-space: nowrap;
     color: var(--ink-dim);
+    border-left: 1px solid var(--line-strong);
+    padding-left: 0.8rem;
+  }
+  @media (max-width: 560px) {
+    .brand { gap: 0.6rem; }
+    .brand__plate img { width: 84px; }
+    .brand__text { font-size: 0.52rem; letter-spacing: 0.1em; padding-left: 0.6rem; }
+  }
+  @media (max-width: 380px) {
+    .brand__plate img { width: 72px; }
+    .brand__text { font-size: 0.48rem; letter-spacing: 0.06em; padding-left: 0.5rem; }
   }
   .nav__list {
     display: flex;
