@@ -16,8 +16,7 @@
     "@fontsource/ibm-plex-mono": "^5.3.0",
     "astro": "^7.2.3",
     "leaflet": "^1.9.4",
-    "leaflet.markercluster": "^1.5.3",
-    "worker-mailer": "^1.2.1"
+    "leaflet.markercluster": "^1.5.3"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260819.1",

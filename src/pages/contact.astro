@@ -1,7 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
-import ContactForm from '../components/ContactForm.astro';
 import site from '../data/site.json';
+
+const tel = site.phone.replace(/\s/g, '');
 ---
 
 <Base
@@ -20,57 +21,108 @@ import site from '../data/site.json';
   </section>
 
   <section class="section--tight">
-    <div class="container contact-grid">
-      <div class="reveal">
-        <ContactForm />
-      </div>
-      <aside class="contact-side reveal" style="--reveal-delay:.1s">
-        <div class="contact-block">
-          <p class="spec spec--plain">Email</p>
-          <a class="contact-big" href={`mailto:${site.email}`}>{site.email}</a>
-        </div>
+    <div class="container">
+      <div class="contact-primary reveal">
         {
           site.phone && (
-            <div class="contact-block">
-              <p class="spec spec--plain">Phone</p>
-              <a class="contact-big" href={`tel:${site.phone.replace(/\s/g, '')}`}>
-                {site.phone}
-              </a>
-            </div>
+            <a class="contact-card" href={`tel:${tel}`}>
+              <span class="spec spec--plain">Phone</span>
+              <span class="contact-card__value">{site.phone}</span>
+              <span class="contact-card__note">Mon–Fri, site hours</span>
+            </a>
           )
         }
+        <a class="contact-card" href={`mailto:${site.email}`}>
+          <span class="spec spec--plain">Email</span>
+          <span class="contact-card__value contact-card__value--email">{site.email}</span>
+          <span class="contact-card__note">Drawings and plans welcome</span>
+        </a>
+      </div>
+
+      <div class="contact-meta reveal" style="--reveal-delay:.1s">
         <div class="contact-block">
           <p class="spec spec--plain">Workshop</p>
-          <p class="contact-big contact-big--plain">{site.address}</p>
+          <p class="contact-meta__value">{site.address}</p>
         </div>
         <div class="contact-block">
           <p class="spec spec--plain">Coverage</p>
-          <p class="contact-big contact-big--plain">All of Victoria</p>
+          <p class="contact-meta__value">All of Victoria</p>
         </div>
-      </aside>
+        {
+          site.abn && (
+            <div class="contact-block">
+              <p class="spec spec--plain">ABN</p>
+              <p class="contact-meta__value">{site.abn}</p>
+            </div>
+          )
+        }
+      </div>
     </div>
   </section>
 </Base>
 
 <style>
-  .contact-grid {
+  .contact-primary {
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: clamp(2.5rem, 6vw, 5rem);
-    align-items: start;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 1.25rem;
   }
-  @media (max-width: 820px) { .contact-grid { grid-template-columns: 1fr; } }
-  .contact-side { display: grid; gap: 2.2rem; }
-  .contact-block { display: grid; gap: 0.6rem; }
-  .contact-big {
+  .contact-card {
+    display: grid;
+    gap: 0.7rem;
+    align-content: start;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    background: var(--surface-1);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    text-decoration: none;
+    transition:
+      border-color 0.2s ease,
+      transform 0.2s ease;
+  }
+  .contact-card:hover {
+    border-color: var(--line-strong);
+    border-left-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .contact-card__value {
     font-family: var(--font-display);
-    font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+    font-size: clamp(1.6rem, 3.4vw, 2.4rem);
     font-weight: 720;
     text-transform: uppercase;
     letter-spacing: 0.02em;
+    line-height: 1.05;
     color: var(--ink);
-    text-decoration: none;
-    line-height: 1.1;
   }
-  a.contact-big:hover { color: var(--accent); }
+  /* email is longer and case-sensitive — keep it readable, not shouted */
+  .contact-card__value--email {
+    font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+    text-transform: none;
+    word-break: break-word;
+  }
+  .contact-card:hover .contact-card__value { color: var(--accent); }
+  .contact-card__note {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .contact-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: 2rem;
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  }
+  .contact-block { display: grid; gap: 0.6rem; }
+  .contact-meta__value {
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 2vw, 1.4rem);
+    font-weight: 720;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+    color: var(--ink);
+  }
 </style>

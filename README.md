@@ -1,8 +1,8 @@
 # MKM Structural Steel — mkm.au
 
 Static site for MKM Structural Steel. Astro + Leaflet, edited via
-[Pages CMS](https://pagescms.org), hosted on Cloudflare Pages, contact form via
-a Cloudflare Pages Function → Google Workspace SMTP.
+[Pages CMS](https://pagescms.org), hosted on Cloudflare Pages. Fully static —
+no Functions, no server-side anything.
 
 ## Stack
 
@@ -12,15 +12,15 @@ a Cloudflare Pages Function → Google Workspace SMTP.
 | Content | Markdown/JSON in `src/content` + `src/data`, edited via Pages CMS (`.pages.yml`) |
 | Project map | Leaflet + OpenStreetMap + markercluster, data from `/projects.json` |
 | Hosting | Cloudflare Pages (build `npm run build`, output `dist`) |
-| Contact form | `functions/api/contact.ts` (Pages Function, SMTP via worker-mailer) |
+| Contact | Phone + email on `/contact` (no form — see below) |
 
 ## Local dev
 
 ```sh
 npm install
-npm run dev          # site at localhost:4321 (contact form POST won't work here)
+npm run dev          # site at localhost:4321
 npm run build        # static build to dist/
-npx wrangler pages dev dist   # test WITH the contact form function (.env needed)
+npm run preview      # serve the built output
 ```
 
 ## Deploy — Cloudflare Pages (one-time setup)
@@ -29,21 +29,23 @@ npx wrangler pages dev dist   # test WITH the contact form function (.env needed
 2. Build command `npm run build`, output directory `dist`. Deploy.
 3. **Custom domain**: add `mkm.au` (and `www.mkm.au`) to the Pages project.
    Requires mkm.au's DNS to be on Cloudflare (free plan fine).
-4. **Env vars** (Settings → Environment variables, Production, all *secrets*):
-   see `.env.example` — `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `CONTACT_TO`.
+4. **Env var**: `NODE_VERSION` = `22.12.0` (plaintext) — Astro 7 requires Node >= 22.12.
 5. **Old domain redirect**: Cloudflare → mkmstructural.com.au zone → Rules →
    Redirect Rules → dynamic redirect: all requests → `https://mkm.au` (301).
 
 Every push to `main` auto-builds and deploys. PRs get preview URLs.
 
-## Google Workspace SMTP (contact form)
+## Contact page
 
-1. In Google Admin, ensure 2-Step Verification is allowed/enabled for the sending account (e.g. `website@mkm.au`).
-2. That account → myaccount.google.com → Security → App passwords → create one for "Mail".
-3. Use it as `SMTP_PASS` with `SMTP_USER` = the account email, host `smtp.gmail.com`, port `465`.
+`/contact` lists phone and email only — no form, so there are no secrets, no
+SMTP account and no Pages Functions to configure. Phone, email, address and ABN
+all come from `src/data/site.json` (editable in the admin portal).
 
-Alternative if app passwords are blocked: Google Admin → Apps → Google Workspace →
-Gmail → Routing → SMTP relay service (`smtp-relay.gmail.com`).
+To bring the form back: it lived in `src/components/ContactForm.astro` +
+`functions/api/contact.ts` (Pages Function → Google Workspace SMTP via
+worker-mailer). Recover with `git log --diff-filter=D --oneline -- functions`,
+then `git checkout <commit>^ -- functions .env.example src/components/ContactForm.astro`.
+It needs the `nodejs_compat` compatibility flag plus five SMTP secrets.
 
 ## Content editing (Callan's admin portal)
 
@@ -63,7 +65,6 @@ projects are in.
 
 ```
 .pages.yml               Pages CMS (admin UI) definition
-functions/api/contact.ts contact form handler (Cloudflare Pages Function)
 public/uploads/          CMS-managed images
 src/content/projects/    one .md per project (frontmatter + description)
 src/content/staff/       one .md per team member
@@ -71,6 +72,6 @@ src/content/pages/       about page text
 src/data/site.json       contact details, stats, services
 src/pages/               routes (home, projects, projects/[slug], about, contact)
 src/pages/projects.json.ts  map pin data endpoint (built statically)
-src/components/          header/footer/cards/map/form
+src/components/          header/footer/cards/map
 src/styles/global.css    design tokens + base styles
 ```

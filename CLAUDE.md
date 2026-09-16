@@ -12,6 +12,6 @@ deploy and content-editing docs.
   `#27235D` rgb(39,35,93), grey `#666`, black; navy `.blueprint` sections for
   map/process). Fonts: Big Shoulders (display), Barlow (body), IBM Plex Mono
   (labels).
-- `dist/` output must stay fully static except `functions/` (Cloudflare Pages
-  Functions). No SSR adapter.
-- Contact form envs: see `.env.example`; set as Cloudflare Pages secrets.
+- Fully static: no SSR adapter, no Pages Functions. `/contact` is phone + email
+  from `src/data/site.json` — the SMTP contact form was removed (see README for
+  how to restore it).
