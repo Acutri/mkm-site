@@ -1,15 +1,26 @@
 {
   "company": "MKM Structural Steel",
   "tagline": "Structural steel — detailed, fabricated and erected across Victoria.",
-  "phone": "",
+  "phone": "(03) 9791 8008",
   "email": "mkm@mkm.au",
   "address": "Victoria, Australia",
-  "abn": "",
   "stats": [
-    { "value": "20+", "label": "Years in steel" },
-    { "value": "100+", "label": "Projects delivered" },
-    { "value": "4", "label": "Services under one roof" },
-    { "value": "VIC", "label": "Wide coverage" }
+    {
+      "value": "20+",
+      "label": "Years in steel"
+    },
+    {
+      "value": "100+",
+      "label": "Projects delivered"
+    },
+    {
+      "value": "4",
+      "label": "Services under one roof"
+    },
+    {
+      "value": "VIC",
+      "label": "Wide coverage"
+    }
   ],
   "services": [
     {
