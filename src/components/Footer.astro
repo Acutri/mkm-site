@@ -7,7 +7,10 @@ const year = new Date().getFullYear();
   <div class="hazard" aria-hidden="true"></div>
   <div class="container footer__grid section--tight">
     <div class="footer__brand">
-      <span class="footer__plate"><img src="/logo.png" alt="MKM" width="140" height="39" /></span>
+      <span class="footer__plate">
+        <img src="/logo.png" alt="" width="140" height="39" />
+        <span class="footer__wordmark">MKM Structural Steel</span>
+      </span>
       <p class="footer__tag">{site.tagline}</p>
     </div>
 
@@ -40,20 +43,24 @@ const year = new Date().getFullYear();
 </footer>
 
 <style>
-  .footer { background: var(--steel-900); border-top: 1px solid var(--line); }
+  .footer { background: var(--surface-1); border-top: 1px solid var(--line); }
   .footer__grid {
     display: grid;
     grid-template-columns: 2fr 1fr 1.4fr;
     gap: 2.5rem;
   }
-  .footer__plate {
-    display: inline-block;
-    background: var(--paper);
-    padding: 0.5rem 0.7rem;
+  .footer__plate { display: inline-grid; justify-items: start; gap: 0.5rem; }
+  .footer__plate img { display: block; }
+  .footer__wordmark {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
   }
   .footer__tag {
     margin-top: 1rem;
-    color: var(--paper-dim);
+    color: var(--ink-dim);
     max-width: 26em;
     font-size: 0.95rem;
   }
@@ -62,17 +69,17 @@ const year = new Date().getFullYear();
     font-size: 0.72rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--weld);
+    color: var(--accent);
     margin-bottom: 0.9rem;
   }
   .footer ul { list-style: none; display: grid; gap: 0.45rem; }
   .footer a {
-    color: var(--paper-dim);
+    color: var(--ink-dim);
     text-decoration: none;
     transition: color 0.2s ease;
   }
-  .footer a:hover { color: var(--weld); }
-  .footer__contact { color: var(--paper-dim); font-size: 0.95rem; }
+  .footer a:hover { color: var(--accent); }
+  .footer__contact { color: var(--ink-dim); font-size: 0.95rem; }
   .footer__abn { font-family: var(--font-mono); font-size: 0.8rem; }
   .footer__legal {
     border-top: 1px solid var(--line);
@@ -80,7 +87,7 @@ const year = new Date().getFullYear();
     font-family: var(--font-mono);
     font-size: 0.72rem;
     letter-spacing: 0.1em;
-    color: var(--paper-faint);
+    color: var(--ink-faint);
   }
   .footer__legal .container {
     display: flex;

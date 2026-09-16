@@ -78,13 +78,13 @@ const gallery = d.images.filter((img) => img !== d.cover);
     position: relative;
     padding-top: clamp(4rem, 9vw, 7rem);
     background:
-      linear-gradient(180deg, rgba(14, 15, 18, 0.75), var(--steel-950) 92%),
-      var(--cover, linear-gradient(135deg, var(--steel-800), var(--steel-900)));
+      linear-gradient(180deg, rgba(255, 255, 255, 0.88), var(--surface-0) 92%),
+      var(--cover, linear-gradient(135deg, var(--surface-3), var(--surface-1)));
     background-size: cover;
     background-position: center;
   }
   .p-hero__inner { padding-bottom: clamp(2.5rem, 5vw, 4rem); }
-  .p-hero__back { color: var(--weld); text-decoration: none; }
+  .p-hero__back { color: var(--accent); text-decoration: none; }
   .p-hero__back:hover { text-decoration: underline; }
   .p-hero h1 { margin-top: 1.2rem; max-width: 12em; }
 
@@ -100,10 +100,10 @@ const gallery = d.images.filter((img) => img !== d.cover);
     .p-specs { position: static; }
   }
 
-  .prose :global(p) { margin-bottom: 1.1rem; color: var(--paper-dim); }
-  .prose :global(strong) { color: var(--paper); }
+  .prose :global(p) { margin-bottom: 1.1rem; color: var(--ink-dim); }
+  .prose :global(strong) { color: var(--ink); }
   .prose :global(ul),
-  .prose :global(ol) { margin: 0 0 1.1rem 1.3rem; color: var(--paper-dim); }
+  .prose :global(ol) { margin: 0 0 1.1rem 1.3rem; color: var(--ink-dim); }
   .prose :global(h2),
   .prose :global(h3) { margin: 1.8rem 0 0.8rem; }
 
@@ -115,7 +115,7 @@ const gallery = d.images.filter((img) => img !== d.cover);
   .gallery__item {
     margin: 0;
     border: 1px solid var(--line);
-    background: var(--steel-900);
+    background: var(--surface-1);
     overflow: hidden;
   }
   .gallery__item--wide { grid-column: span 2; }

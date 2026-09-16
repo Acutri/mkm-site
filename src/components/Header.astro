@@ -11,9 +11,9 @@ const path = Astro.url.pathname;
   <div class="site-header__inner container">
     <a href="/" class="brand" aria-label="MKM Structural Steel — home">
       <span class="brand__plate">
-        <img src="/logo.png" alt="MKM" width="120" height="33" />
+        <img src="/logo.png" alt="" width="120" height="33" />
       </span>
-      <span class="brand__text">Structural<br />Steel</span>
+      <span class="brand__text">MKM Structural Steel</span>
     </a>
 
     <nav class="nav" aria-label="Main">
@@ -46,7 +46,7 @@ const path = Astro.url.pathname;
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: color-mix(in srgb, var(--steel-950) 88%, transparent);
+    background: color-mix(in srgb, var(--surface-0) 88%, transparent);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--line);
@@ -65,8 +65,6 @@ const path = Astro.url.pathname;
     text-decoration: none;
   }
   .brand__plate {
-    background: var(--paper);
-    padding: 0.35rem 0.55rem;
     display: grid;
     place-items: center;
   }
@@ -74,10 +72,22 @@ const path = Astro.url.pathname;
   .brand__text {
     font-family: var(--font-mono);
     font-size: 0.62rem;
-    letter-spacing: 0.26em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    line-height: 1.5;
-    color: var(--paper-dim);
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--ink-dim);
+    border-left: 1px solid var(--line-strong);
+    padding-left: 0.8rem;
+  }
+  @media (max-width: 560px) {
+    .brand { gap: 0.6rem; }
+    .brand__plate img { width: 84px; }
+    .brand__text { font-size: 0.52rem; letter-spacing: 0.1em; padding-left: 0.6rem; }
+  }
+  @media (max-width: 380px) {
+    .brand__plate img { width: 72px; }
+    .brand__text { font-size: 0.48rem; letter-spacing: 0.06em; padding-left: 0.5rem; }
   }
   .nav__list {
     display: flex;
@@ -92,12 +102,12 @@ const path = Astro.url.pathname;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     text-decoration: none;
-    color: var(--paper-dim);
+    color: var(--ink-dim);
     padding-block: 0.4rem;
     position: relative;
     transition: color 0.2s ease;
   }
-  .nav__link:hover { color: var(--paper); }
+  .nav__link:hover { color: var(--ink); }
   .nav__link::after {
     content: '';
     position: absolute;
@@ -105,12 +115,12 @@ const path = Astro.url.pathname;
     bottom: 0;
     height: 2px;
     width: 0;
-    background: var(--weld);
+    background: var(--accent);
     transition: width 0.25s ease;
   }
   .nav__link:hover::after,
   .nav__link[aria-current='page']::after { width: 100%; }
-  .nav__link[aria-current='page'] { color: var(--paper); }
+  .nav__link[aria-current='page'] { color: var(--ink); }
   .nav__cta {
     font-family: var(--font-mono);
     font-size: 0.78rem;
@@ -118,12 +128,12 @@ const path = Astro.url.pathname;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     text-decoration: none;
-    color: var(--steel-950);
-    background: var(--weld);
+    color: var(--surface-0);
+    background: var(--accent);
     padding: 0.6rem 1.1rem;
     transition: background 0.2s ease;
   }
-  .nav__cta:hover { background: var(--bronze-pale); }
+  .nav__cta:hover { background: var(--accent-soft); }
 
   .nav__toggle {
     display: none;
@@ -131,7 +141,7 @@ const path = Astro.url.pathname;
     gap: 0.6rem;
     background: none;
     border: 1px solid var(--line-strong);
-    color: var(--paper);
+    color: var(--ink);
     font-family: var(--font-mono);
     font-size: 0.75rem;
     letter-spacing: 0.14em;
@@ -144,7 +154,7 @@ const path = Astro.url.pathname;
     display: block;
     width: 18px;
     height: 2px;
-    background: var(--weld);
+    background: var(--accent);
   }
 
   @media (max-width: 760px) {
@@ -158,8 +168,8 @@ const path = Astro.url.pathname;
       flex-direction: column;
       align-items: stretch;
       gap: 0;
-      background: var(--steel-900);
-      border-bottom: 2px solid var(--weld);
+      background: var(--surface-1);
+      border-bottom: 2px solid var(--accent);
       padding: 0.5rem 0 1rem;
     }
     .nav__list.is-open { display: flex; }
