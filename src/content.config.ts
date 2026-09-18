@@ -5,7 +5,9 @@ const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
   schema: z.object({
     title: z.string(),
-    client: z.string().optional(),
+    builder: z.string().optional(),
+    tonnage: z.number().nonnegative().optional(),
+    floorArea: z.number().nonnegative().optional(),
     location: z.string(),
     year: z.number().int().optional(),
     category: z.string().default('Commercial'),

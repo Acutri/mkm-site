@@ -1,5 +1,7 @@
 ---
 title: Ballarat School Multi-Purpose Hall
+tonnage: 96
+floorArea: 2100
 location: Ballarat
 year: 2023
 category: Education
