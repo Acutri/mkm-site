@@ -11,6 +11,8 @@ const { project } = Astro.props;
 const { Content } = await render(project);
 const d = project.data;
 const gallery = d.images.filter((img) => img !== d.cover);
+// thousands separators, and drop a trailing .0 on whole tonnes
+const num = (n: number) => n.toLocaleString('en-AU', { maximumFractionDigits: 1 });
 ---
 
 <Base title={d.title} description={d.summary ?? `${d.title} — ${d.location}`} ogImage={d.cover}>
@@ -32,7 +34,9 @@ const gallery = d.images.filter((img) => img !== d.cover);
               <tr><th>Location</th><td>{d.location}</td></tr>
               {d.year && <tr><th>Year</th><td>{d.year}</td></tr>}
               <tr><th>Category</th><td>{d.category}</td></tr>
-              {d.client && <tr><th>Client</th><td>{d.client}</td></tr>}
+              {d.builder && <tr><th>Builder</th><td>{d.builder}</td></tr>}
+              {d.tonnage && <tr><th>Tonnage</th><td>{num(d.tonnage)} t</td></tr>}
+              {d.floorArea && <tr><th>Floor area</th><td>{num(d.floorArea)} m²</td></tr>}
             </tbody>
           </table>
           <a class="btn btn--ghost" href="/contact" style="margin-top:2rem">

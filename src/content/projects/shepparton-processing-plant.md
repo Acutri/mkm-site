@@ -1,5 +1,8 @@
 ---
 title: Shepparton Processing Plant Upgrade
+builder: Sample Builder Pty Ltd
+tonnage: 185.5
+floorArea: 4200
 location: Shepparton
 year: 2024
 category: Industrial
