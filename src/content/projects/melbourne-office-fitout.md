@@ -1,6 +1,8 @@
 ---
 title: CBD Office Structural Works
-client: Sample Constructions
+builder: Sample Constructions
+tonnage: 38
+floorArea: 1800
 location: Melbourne
 year: 2023
 category: Commercial

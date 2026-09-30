@@ -15,7 +15,7 @@ content:
     path: src/content/projects
     format: yaml-frontmatter
     view:
-      fields: [title, location, year, category, showOnMap, featured]
+      fields: [title, builder, location, year, tonnage, floorArea, category, featured]
       primary: title
       sort: [year, title]
       default:
@@ -26,8 +26,8 @@ content:
         label: Project name
         type: string
         required: true
-      - name: client
-        label: Client / builder
+      - name: builder
+        label: Builder
         type: string
       - name: location
         label: Location (town or suburb)
@@ -42,6 +42,14 @@ content:
         default: Commercial
         options:
           values: [Commercial, Industrial, Residential, Education, Agricultural, Community, Infrastructure]
+      - name: tonnage
+        label: Total tonnage (t)
+        type: number
+        options: { step: 0.1, min: 0 }
+      - name: floorArea
+        label: Building floor area (m²)
+        type: number
+        options: { step: 1, min: 0 }
       - name: summary
         label: One-line summary (shown on cards)
         type: string

@@ -1,6 +1,8 @@
 ---
 title: Geelong Distribution Centre
-client: Sample Builder Pty Ltd
+builder: Sample Builder Pty Ltd
+tonnage: 850
+floorArea: 20000
 location: Geelong
 year: 2024
 category: Industrial
